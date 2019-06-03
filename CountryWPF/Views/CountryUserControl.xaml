@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="CountryWPF.Views.CountryUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:v="clr-namespace:CountryWPF.Views"
+             xmlns:m = "clr-namespace:CountryWPF.Model" 
+             xmlns:viewModel = "clr-namespace:CountryWPF.ViewModel" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" Width="600">
+
+    <UserControl.DataContext>
+        <viewModel:CountryViewModel x:Name="cvm"/>
+    </UserControl.DataContext>
+    
+    <UserControl.Resources>
+        <viewModel:CountryViewModel x:Key="cvm"/>
+    </UserControl.Resources>
+
+    <Grid DataContext="{Binding CurrCountry, Source={StaticResource cvm}}">
+        <materialDesign:TransitioningContent x:Name="TransitioningContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.8}" >
+            <StackPanel Orientation="Vertical" >
+                <StackPanel Orientation="Vertical" Margin="0 0 0 20">
+                    <TextBlock Text="{Binding CountryName}" FontSize="50" FontFamily="Cooper Black" Foreground="#FFC00000"  HorizontalAlignment="Center"/>
+                    <Image Width="400" Height="200" Source="{Binding CountryFlag}" Stretch="Fill" Margin="25" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="CAPITAL: " FontSize="20" FontFamily="FreeStyle Script" >
+                        <TextBlock Text="{Binding CapitalName}" FontSize="20" FontFamily="FreeStyle Script" />
+                    </TextBlock>
+                    <TextBlock Text="{Binding CountryInfo}" FontSize="20" FontFamily="FreeStyle Script"/>
+                 </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <Button Width="60" Margin="10"  Command="{Binding PreviousCommand, Source={StaticResource cvm}}" >
+                        <materialDesign:PackIcon Kind="ArrowBack" />
+                    </Button>
+                    <Button Width="60" Margin="10" Command="{Binding NextCommand, Source={StaticResource cvm}}" >
+                        <materialDesign:PackIcon Kind="ArrowForward" />
+                    </Button>
+                    <Button Width="60" Margin="10"  Command="{Binding DeleteCommand, Source={StaticResource cvm}}">
+                        <materialDesign:PackIcon Kind="Bin" />
+                    </Button>
+                    <Button Width="60" Margin="10"  Command="{Binding UndoCommand, Source={StaticResource cvm}}">
+                        <materialDesign:PackIcon Kind="Undo" />
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </materialDesign:TransitioningContent>
+    </Grid>
+</UserControl>

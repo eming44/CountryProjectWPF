@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="CountryWPF.Views.AddCountry"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CountryWPF.Views"
+             xmlns:viewModel = "clr-namespace:CountryWPF.ViewModel" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" Width="600">
+
+    <UserControl.DataContext>
+        <viewModel:CountryViewModel x:Name="cvm"/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <viewModel:CountryViewModel x:Key="cvm"/>
+    </UserControl.Resources>
+
+    <Grid DataContext="{Binding CurrCountry, Source={StaticResource cvm}}">
+        <materialDesign:TransitioningContent x:Name="TransitioningContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.8}" >
+            <StackPanel Orientation="Vertical" >
+                <StackPanel Orientation="Horizontal" Margin="10 30 0 50" HorizontalAlignment="Center">
+                    <TextBlock Text="ADD NEW COUNTRY" FontSize="40" FontFamily="Cooper Black" Foreground="#FFC00000"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </StackPanel>
+                
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" >
+                    <TextBlock Text="Name" FontSize="30" FontFamily="FreeStyle Script" />
+                    <TextBox x:Name="countryName" Text="{Binding CountryName, Mode=TwoWay}" />
+                    <TextBlock Text="Capital" FontSize="30" FontFamily="FreeStyle Script" />
+                    <TextBox x:Name="capitalName" Text="{Binding CapitalName, Mode=TwoWay}" />
+                    <TextBlock Text="Country Information" FontSize="30" FontFamily="FreeStyle Script" />
+                    <TextBox x:Name="countryInfo" Text="{Binding TerritoryInfo, Mode=TwoWay}" />
+                    <TextBlock Text="County Flag Path" FontSize="30" FontFamily="FreeStyle Script" />
+                    <TextBox x:Name="countryPath" Text="{Binding CountryPath, Mode=TwoWay}" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <Button Width="50" Margin="10"  Command="{Binding SaveCommand, Source={StaticResource cvm}}" >
+                        <materialDesign:PackIcon Kind="ContentSave" />
+                    </Button>
+                    <Button Width="50" Margin="10" Click="ResetTextBoxes">
+                        <materialDesign:PackIcon Kind="Restart"  />
+                    </Button>
+                    <Button Width="50" Margin="10" Click="EnterRussiaInfo">
+                        <materialDesign:PackIcon Kind="Information"  />
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </materialDesign:TransitioningContent>
+    </Grid>
+</UserControl>
