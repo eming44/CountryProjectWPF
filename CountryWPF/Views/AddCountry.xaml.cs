@@ -41,7 +41,6 @@ namespace CountryWPF.Views
         private void EnterRussiaInfo(object sender, RoutedEventArgs e)
         {
             this.countryName.Text = "Russia";
-            countryName.CaretIndex = 4;
             this.capitalName.Text = "Moscow";
             this.countryInfo.Text =
             "Official languages: Russian\n" +

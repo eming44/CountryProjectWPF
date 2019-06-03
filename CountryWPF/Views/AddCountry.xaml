@@ -30,7 +30,7 @@
                     <TextBlock Text="Capital" FontSize="30" FontFamily="FreeStyle Script" />
                     <TextBox x:Name="capitalName" Text="{Binding CapitalName, Mode=TwoWay}" />
                     <TextBlock Text="Country Information" FontSize="30" FontFamily="FreeStyle Script" />
-                    <TextBox x:Name="countryInfo" Text="{Binding TerritoryInfo, Mode=TwoWay}" />
+                    <TextBox x:Name="countryInfo" Text="{Binding CountryInfo, Mode=TwoWay}" />
                     <TextBlock Text="County Flag Path" FontSize="30" FontFamily="FreeStyle Script" />
                     <TextBox x:Name="countryPath" Text="{Binding CountryPath, Mode=TwoWay}" />
                 </StackPanel>
