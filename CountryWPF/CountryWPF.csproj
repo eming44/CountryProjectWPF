@@ -90,9 +90,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Assets\HelperFunction.cs" />
+    <Compile Include="Model\CountriesDB.cs" />
     <Compile Include="Factories\CountryFactory.cs" />
     <Compile Include="Model\Interfaces\ICountry.cs" />
     <Compile Include="MyICommand.cs" />
+    <Compile Include="ViewModel\AddCountryViewModel.cs" />
+    <Compile Include="ViewModel\CountryListViewModel.cs" />
     <Compile Include="ViewModel\CountryViewModel.cs" />
     <Compile Include="Views\AddCountry.xaml.cs">
       <DependentUpon>AddCountry.xaml</DependentUpon>

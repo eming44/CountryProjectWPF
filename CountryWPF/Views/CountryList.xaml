@@ -11,13 +11,13 @@
              d:DesignHeight="600" d:DesignWidth="700">
 
     <UserControl.Resources>
-        <viewModel:CountryViewModel x:Key="cvm" />
+        <viewModel:CountryListViewModel x:Key="clvm" />
     </UserControl.Resources>
 
     <Grid>
         <materialDesign:TransitioningContent x:Name="TransitioningContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.8}" >
             <Grid>
-                <ListBox x:Name="countriesListBox" ItemsSource="{Binding Countries, Source={StaticResource cvm}}" Height="500" Width="700">
+                <ListBox x:Name="countriesListBox" ItemsSource="{Binding Countries, Source={StaticResource clvm}}" Height="500" Width="700">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type m:CountryModel}">
                             <StackPanel Orientation="Horizontal" >

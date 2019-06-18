@@ -15,7 +15,7 @@ namespace UnitTestCountryWPF
             CountryViewModel cvm = new CountryViewModel();
             ObservableCollection<ICountry> collection = new ObservableCollection<ICountry>();
             ObservableCollection<ICountry> collectionAfterLoad = new ObservableCollection<ICountry>();
-            collectionAfterLoad = CountryViewModel.Countries;
+            collectionAfterLoad = cvm.Countries;
 
             cvm.LoadCountries();
 

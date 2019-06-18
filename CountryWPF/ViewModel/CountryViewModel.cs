@@ -36,8 +36,13 @@ namespace CountryWPF.ViewModel
                 this.currCountry = value;
             }
         }
-        public static ObservableCollection<ICountry> Countries { get; set; }
-        public MyICommand SaveCommand { get; set; }
+        public ObservableCollection<ICountry> Countries
+        {
+            get
+            {
+                return CountriesDB.Countries;
+            }
+        }
         public MyICommand NextCommand { get; set; }
         public MyICommand PreviousCommand { get; set; }
         public MyICommand DeleteCommand { get; set; }
@@ -45,64 +50,40 @@ namespace CountryWPF.ViewModel
         #endregion
 
         #region Methods
-
-        private void OnSave()
-        {
-            if (currCountry.CountryName != "" 
-                && currCountry.CapitalName != ""
-                && currCountry.CountryInfo != ""
-                && currCountry.CountryPath != "")
-            {
-                ICountry country = CountryFactory.CreateEmptyCountry();
-
-                country.CountryName = currCountry.CountryName;
-                country.CapitalName = currCountry.CapitalName;
-                country.CountryInfo = currCountry.CountryInfo;
-                country.CountryPath = currCountry.CountryPath;
-
-                Countries.Add(country);
-
-                //Countries = countries;
-
-                currCountry = HelperFunction.ResetCountry(currCountry);
-
-                MessageBox.Show($"Country added successfully!");
-            }
-        }
         private void OnNext()
         {
-            if (deletedCountriesIndex.Count < Countries.Count)
+            if (deletedCountriesIndex.Count < CountriesDB.Countries.Count)
             {
                 do
                 {
-                    if (currCountryIndex == Countries.Count - 1)
+                    if (currCountryIndex == CountriesDB.Countries.Count - 1)
                     {
                         currCountryIndex = 0;
                     }
-                    else if (currCountryIndex < Countries.Count - 1)
+                    else if (currCountryIndex < CountriesDB.Countries.Count - 1)
                     {
                         currCountryIndex++;
                     }
-                } while (Countries[currCountryIndex].IsDeleted == true);
+                } while (CountriesDB.Countries[currCountryIndex].IsDeleted == true);
 
                 ConvertInNewCountry();
             }
         }
         private void OnPrevious()
         {
-            if (deletedCountriesIndex.Count < Countries.Count)
+            if (deletedCountriesIndex.Count < CountriesDB.Countries.Count)
             {
                 do
                 {
                     if (currCountryIndex == 0)
                     {
-                        currCountryIndex = Countries.Count - 1;
+                        currCountryIndex = CountriesDB.Countries.Count - 1;
                     }
                     else if (currCountryIndex > 0)
                     {
                         currCountryIndex--;
                     }
-                } while (Countries[currCountryIndex].IsDeleted == true);
+                } while (CountriesDB.Countries[currCountryIndex].IsDeleted == true);
 
                 ConvertInNewCountry();
             }
@@ -113,13 +94,13 @@ namespace CountryWPF.ViewModel
         }
         private void OnDelete()
         {
-            if (deletedCountriesIndex.Count < Countries.Count)
+            if (deletedCountriesIndex.Count < CountriesDB.Countries.Count)
             {
-                if(deletedCountriesIndex.Count + 1 == Countries.Count
-                    && MessageBox.Show($"Do you really want to delete {Countries[currCountryIndex].CountryName}?", "Please select", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if(deletedCountriesIndex.Count + 1 == CountriesDB.Countries.Count
+                    && MessageBox.Show($"Do you really want to delete {CountriesDB.Countries[currCountryIndex].CountryName}?", "Please select", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     deletedCountriesIndex.Add(currCountryIndex);
-                    Countries[currCountryIndex].IsDeleted = true;
+                    CountriesDB.Countries[currCountryIndex].IsDeleted = true;
 
                     ICountry test = CountryFactory.CreateEmptyCountry(@"Images\noImage.png");
 
@@ -128,10 +109,10 @@ namespace CountryWPF.ViewModel
                     CurrCountry.CountryInfo = test.CountryInfo;
                     CurrCountry.CountryFlag = test.CountryFlag;
                 }
-                else if (MessageBox.Show($"Do you really want to delete {Countries[currCountryIndex].CountryName}?", "Please select", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                else if (MessageBox.Show($"Do you really want to delete {CountriesDB.Countries[currCountryIndex].CountryName}?", "Please select", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     deletedCountriesIndex.Add(currCountryIndex);
-                    Countries[currCountryIndex].IsDeleted = true;
+                    CountriesDB.Countries[currCountryIndex].IsDeleted = true;
                     OnNext();
                 }
             }
@@ -141,17 +122,17 @@ namespace CountryWPF.ViewModel
             if (deletedCountriesIndex.Count != 0)
             {
                 currCountryIndex = deletedCountriesIndex[deletedCountriesIndex.Count - 1];
-                Countries[deletedCountriesIndex[deletedCountriesIndex.Count - 1]].IsDeleted = false;
+                CountriesDB.Countries[deletedCountriesIndex[deletedCountriesIndex.Count - 1]].IsDeleted = false;
                 deletedCountriesIndex.RemoveAt(deletedCountriesIndex.Count - 1);
                 ConvertInNewCountry();
             }
         }
         private void ConvertInNewCountry()
         {
-            CurrCountry.CountryName = Countries[currCountryIndex].CountryName;
-            CurrCountry.CapitalName = Countries[currCountryIndex].CapitalName;
-            CurrCountry.CountryInfo = Countries[currCountryIndex].CountryInfo;
-            CurrCountry.CountryFlag = Countries[currCountryIndex].CountryFlag;
+            CurrCountry.CountryName = CountriesDB.Countries[currCountryIndex].CountryName;
+            CurrCountry.CapitalName = CountriesDB.Countries[currCountryIndex].CapitalName;
+            CurrCountry.CountryInfo = CountriesDB.Countries[currCountryIndex].CountryInfo;
+            CurrCountry.CountryFlag = CountriesDB.Countries[currCountryIndex].CountryFlag;
         }
         public void LoadCountries()
         {
@@ -169,7 +150,7 @@ namespace CountryWPF.ViewModel
             countries.Add(germany);
             countries.Add(brazil);
 
-            Countries = countries;
+            CountriesDB.Countries = countries;
 
             ConvertInNewCountry();
         }
@@ -180,7 +161,6 @@ namespace CountryWPF.ViewModel
             PreviousCommand = new MyICommand(OnPrevious, CanNextOrPrevious);
             DeleteCommand = new MyICommand(OnDelete);
             UndoCommand = new MyICommand(OnUndo);
-            SaveCommand = new MyICommand(OnSave);
         }
         #endregion
     }
